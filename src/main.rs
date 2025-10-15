@@ -1,7 +1,11 @@
 use rand::Rng;
 use std::time::Instant;
 
+const RADIUS: f64 = 1.0;
+const RADIUS_SQ: f64 = RADIUS * RADIUS;
+
 fn generate_coord<T: Rng>(mut rng: T) -> (f64, f64) {
+    // Generate an x, y coordinate pair
     let x: f64 = rng.random();
     let y: f64 = rng.random();
 
@@ -13,12 +17,16 @@ fn main() {
 
     let time_start = Instant::now();
     let (x, y) = generate_coord(rng);
+    let sample_radius_sq = x * x + y * y;
     let time_end = Instant::now();
 
     let duration = time_end.duration_since(time_start);
     let duration_ms = duration.as_micros();
 
+    let in_circle: bool = sample_radius_sq <= RADIUS_SQ;
+
     println!("x: {x}");
     println!("y: {y}");
-    println!("duration: {duration_ms} microseconds")
+    println!("in circle: {in_circle}");
+    println!("duration: {duration_ms} microseconds");
 }
