@@ -13,10 +13,11 @@ fn generate_coord<T: Rng>(mut rng: T) -> (f64, f64) {
 }
 
 fn main() {
-    let n_samples: i32 = 10000;
+    let n_samples: i32 = 100000;
     let mut rng = rand::rng();
 
     let time_start = Instant::now();
+    // Draw samples and check
     let mut count = 0;
     for _i in 0..=n_samples {
         let (x, y) = generate_coord(&mut rng);
@@ -33,8 +34,6 @@ fn main() {
     
     let pi: f64 = 4.0 * count as f64 / n_samples as f64;
 
-    println!("count: {count}");
-    println!("pi: {pi}");
-    
+    println!("pi: {pi}");    
     println!("duration: {duration_ms} microseconds");
 }
