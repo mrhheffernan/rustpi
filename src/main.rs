@@ -1,3 +1,4 @@
+use clap::Parser;
 use rand::Rng;
 use std::time::Instant;
 
@@ -12,8 +13,16 @@ fn generate_coord<T: Rng>(mut rng: T) -> (f64, f64) {
     (x, y)
 }
 
+#[derive(Parser)]
+struct Args {
+    // The pattern to look for
+    #[arg(short, long)]
+    n_samples: i32,
+}
+
 fn main() {
-    let n_samples: i32 = 100000;
+    let args = Args::parse();
+    let n_samples = args.n_samples;
     let mut rng = rand::rng();
 
     let time_start = Instant::now();
@@ -34,6 +43,7 @@ fn main() {
     
     let pi: f64 = 4.0 * count as f64 / n_samples as f64;
 
+    println!("n_samples: {n_samples}");
     println!("pi: {pi}");    
     println!("duration: {duration_ms} microseconds");
 }
