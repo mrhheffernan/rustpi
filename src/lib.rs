@@ -24,7 +24,6 @@ pub mod utils {
         }
 
         let pi: f64 = 4.0 * count as f64 / n_samples as f64;
-
         pi
     }
 }
