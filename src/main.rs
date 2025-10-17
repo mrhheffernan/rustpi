@@ -12,10 +12,9 @@ struct Args {
 fn main() {
     let args = Args::parse();
     let n_samples = args.n_samples;
-    let mut rng = rand::rng();
 
     let time_start = Instant::now();
-    let pi = estimate_pi(&n_samples, &mut rng);
+    let pi = estimate_pi(&n_samples);
     let time_end = Instant::now();
 
     let duration = time_end.duration_since(time_start);

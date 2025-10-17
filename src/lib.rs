@@ -1,23 +1,33 @@
-use rand::Rng;
-
 const RADIUS: f64 = 1.0;
 const RADIUS_SQ: f64 = RADIUS * RADIUS;
 
 pub mod utils {
-    fn generate_coord<T: super::Rng>(mut rng: T) -> (f64, f64) {
-        // Generate an x, y coordinate pair
-        let x: f64 = rng.random();
-        let y: f64 = rng.random();
+    use rand::Rng;
+    use rayon::prelude::*;
+    fn generate_coords(n_samples: i32) -> (Vec<f64>, Vec<f64>) {
+        // the || is a way of getting an anonymous functino
+        let sampler = || {
+            let mut rng = rand::rng();
+            rng.random_range(0.0..1.0)
+        };
 
-        (x, y)
+        let x_vec = (0..n_samples).into_par_iter().map(|_| sampler()).collect();
+        let y_vec = (0..n_samples).into_par_iter().map(|_| sampler()).collect();
+
+        (x_vec, y_vec)
     }
 
-    pub fn estimate_pi<T: super::Rng>(&n_samples: &i32, mut rng: T) -> f64 {
+    pub fn estimate_pi(&n_samples: &i32) -> f64 {
         let mut count = 0;
-        for _i in 0..=n_samples {
-            let (x, y) = generate_coord(&mut rng);
-            let sample_radius_sq = x * x + y * y;
+        let (x, y) = generate_coords(n_samples);
+
+        for i in 0..=n_samples - 1 {
+            let x_sample = x[i as usize];
+            let y_sample = y[i as usize];
+
+            let sample_radius_sq = x_sample * x_sample + y_sample * y_sample;
             let in_circle: bool = sample_radius_sq <= super::RADIUS_SQ;
+
             if in_circle {
                 count += 1
             }
