@@ -5,14 +5,14 @@ import time
 RADIUS = 1.0
 RADIUS_SQ = RADIUS * RADIUS
 
+
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--n_samples", 
-                      type=int,
-                      help="Number of samples")
-    
+    parser.add_argument("--n_samples", type=int, help="Number of samples")
+
     return parser.parse_args()
+
 
 def generate_coord(rng) -> tuple[float, float]:
     """Generate an x, y coordinate pair"""
@@ -29,9 +29,13 @@ def main():
 
     time_start = time.time()
     count = 0
+    x = rng.random(n_samples)
+    y = rng.random(n_samples)
+
     for i in range(n_samples):
-        x, y = generate_coord(rng)
-        sample_radius_sq = x * x + y * y
+        x_sample = x[i]
+        y_sample = y[i]
+        sample_radius_sq = x_sample * x_sample + y_sample * y_sample
         in_circle = sample_radius_sq <= RADIUS_SQ
         if in_circle:
             count += 1
