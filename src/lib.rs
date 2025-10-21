@@ -13,8 +13,7 @@ pub mod utils {
 
         (0..n_samples).into_par_iter().map(|_| 
             (sampler(), sampler())
-            ).collect();
-        
+            ).collect()
     }
 
     pub fn estimate_pi(&n_samples: &i32) -> f64 {
