@@ -5,15 +5,12 @@ pub mod utils {
     use rand::Rng;
     use rayon::prelude::*;
     fn generate_coords(n_samples: i32) -> Vec<(f64, f64)> {
-        // the || is a way of getting an anonymous function
-        let sampler = || {
-            let mut rng = rand::rng();
-            rng.random_range(0.0..1.0)
-        };
-
-        (0..n_samples).into_par_iter().map(|_| 
-            (sampler(), sampler())
-            ).collect()
+        (0..n_samples)
+            .into_par_iter()
+            .map_init(rand::rng, |rng, _| {
+                (rng.random_range(0.0..1.0), rng.random_range(0.0..1.0))
+            })
+            .collect()
     }
 
     pub fn estimate_pi(&n_samples: &i32) -> f64 {
