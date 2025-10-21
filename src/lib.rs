@@ -3,27 +3,18 @@ const RADIUS_SQ: f64 = RADIUS * RADIUS;
 
 pub mod utils {
     use rand::Rng;
-
+    use rayon::prelude::*;
     fn generate_coords(n_samples: i32) -> Vec<(f64, f64)> {
-        // the || is a way of getting an anonymous functino
+        // the || is a way of getting an anonymous function
         let sampler = || {
             let mut rng = rand::rng();
             rng.random_range(0.0..1.0)
         };
 
-        let mut pairs: Vec<(f64, f64)> = Vec::new();
-        rayon::ThreadPoolBuilder::new()
-            .build()
-            .unwrap()
-            .install(|| {
-                for _ in 0..n_samples {
-                    let x = sampler();
-                    let y = sampler();
-                    pairs.push((x, y))
-                }
-            });
-
-        pairs
+        (0..n_samples).into_par_iter().map(|_| 
+            (sampler(), sampler())
+            ).collect();
+        
     }
 
     pub fn estimate_pi(&n_samples: &i32) -> f64 {
