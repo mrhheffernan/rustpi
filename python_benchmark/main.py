@@ -29,16 +29,11 @@ def main():
 
     time_start = time.time()
     count = 0
-    x = rng.random(n_samples)
-    y = rng.random(n_samples)
+    coords = rng.random((n_samples, 2))
+    radii = coords[:, 0] ** 2 + coords[:, 1] ** 2
+    in_circle = radii <= RADIUS_SQ
+    count = sum(in_circle)
 
-    for i in range(n_samples):
-        x_sample = x[i]
-        y_sample = y[i]
-        sample_radius_sq = x_sample * x_sample + y_sample * y_sample
-        in_circle = sample_radius_sq <= RADIUS_SQ
-        if in_circle:
-            count += 1
     time_end = time.time()
 
     print(f"n_samples: {n_samples}")
