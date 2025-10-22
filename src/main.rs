@@ -1,6 +1,5 @@
 use clap::Parser;
-use mc_circle::utils::estimate_pi;
-use polars::prelude::*;
+use mc_circle::utils::calculate_central_estimate;
 use std::time::Instant;
 
 #[derive(Parser)]
@@ -10,20 +9,6 @@ struct Args {
     n_samples: i32,
     #[arg(short, long)]
     n_estimates: i32,
-}
-
-fn calculate_central_estimate(n_iterations: i32, &n_samples: &i32) -> (f64, f64) {
-    let mut estimates = std::vec::Vec::new();
-    for _i in 0..n_iterations {
-        let pi = estimate_pi(&n_samples);
-        estimates.push(pi);
-    }
-    let s = Series::new("Estimates".into(), &estimates);
-    let mean_pi: f64 = s.mean().unwrap();
-    let estimate_length = n_iterations as f64;
-    let std_err = s.std(1).unwrap() / estimate_length.sqrt();
-
-    (mean_pi, std_err)
 }
 
 fn main() {
