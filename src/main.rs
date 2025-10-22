@@ -32,9 +32,7 @@ fn main() {
     let n_estimates = args.n_estimates;
 
     let time_start = Instant::now();
-
     let (mean_pi, std_err) = calculate_central_estimate(n_estimates, &n_samples);
-
     let time_end = Instant::now();
 
     let duration = time_end.duration_since(time_start);
