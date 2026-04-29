@@ -22,8 +22,9 @@ fn main() {
 
     let duration = time_end.duration_since(time_start);
     let duration_ms = duration.as_micros();
+    let mean_duration_ms: f32 = duration_ms as f32 / n_estimates as f32;
 
     println!("n_samples: {n_samples}");
     println!("mean estimate: {mean_pi} +/- {std_err}");
-    println!("duration: {duration_ms} microseconds");
+    println!("mean duration: {mean_duration_ms} microseconds");
 }

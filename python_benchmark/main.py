@@ -10,7 +10,9 @@ RADIUS_SQ = RADIUS * RADIUS
 def parse_args():
     parser = argparse.ArgumentParser()
 
-    parser.add_argument("--n_samples", type=int, help="Number of samples")
+    parser.add_argument(
+        "--n_samples", type=int, help="Number of samples", required=True
+    )
 
     return parser.parse_args()
 
