@@ -1,6 +1,7 @@
 import argparse
-import numpy as np
 import time
+
+import numpy as np
 
 RADIUS = 1.0
 RADIUS_SQ = RADIUS * RADIUS
@@ -37,8 +38,8 @@ def main():
     time_end = time.time()
 
     print(f"n_samples: {n_samples}")
-    print(f"pi: {4 * count/n_samples}")
-    print(f"duration: {(time_end - time_start) * 10 ** 6}  microseconds")
+    print(f"pi: {4 * count / n_samples}")
+    print(f"duration: {(time_end - time_start) * 10**6}  microseconds")
 
 
 if __name__ == "__main__":
